@@ -1,4 +1,5 @@
 export const items = [
+    "All",
     'Amazon Devices',
     'Amazon Fashion',
     'Amazon Fresh',

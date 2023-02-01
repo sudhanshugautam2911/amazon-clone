@@ -1,0 +1,10 @@
+
+
+
+li.slick-active button::before {
+    color: rgb(189, 0, 0);
+}
+ul li button {
+    font-size:10px;
+    color: rgb(150, 158,171);
+}

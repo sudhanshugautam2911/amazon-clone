@@ -35,7 +35,7 @@ const HeaderBottom = () => {
                             {/* using framer motion tool for the side navbar transition */}
                             <motion.div ref={ref} initial={{ x: -500, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.5 }} className='w-full h-full relative'>
                                 <div className='w-[350px] h-full overflow-y-scroll bg-white border border-black'>
-                                    <div className='w-full bg-amazon_light text-white py-2 px-6 flex items-center gap-4 font-titleFont font-bold tracking-wide text-lg ' ><AccountCircleIcon />
+                                    <div className='w-full bg-amazon_light text-white py-3 px-6 flex items-center gap-4 font-titleFont font-bold tracking-wide text-lg ' ><AccountCircleIcon />
                                         Hello, Sign In
                                     </div>
 

@@ -31,7 +31,7 @@ const HeaderBottom = () => {
                 {
                     sidebar && (
 
-                        <div className=' w-full h-screen text-black fixed top-0 left-0 bg-amazon_blue bg-opacity-70'>
+                        <div className='z-50 w-full h-screen text-black fixed top-0 left-0 bg-amazon_blue bg-opacity-70'>
                             {/* using framer motion tool for the side navbar transition */}
                             <motion.div ref={ref} initial={{ x: -500, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.5 }} className='w-full h-full relative'>
                                 <div className='w-[350px] h-full overflow-y-scroll bg-white border border-black'>

@@ -65,13 +65,15 @@ const Carousel = styled(Slider)`
             /* color: rgb(150, 158,171); */
         }
     }
-    
+    body {
+        z-index:-1;
+    }
     li.slick-active button::before {
         color: white;
     }
 
     .slick-list {
-        overflow: visible;
+        overflow: hidden;
     }
     .slick-prev {
         left:50px;

@@ -6,7 +6,7 @@ import { logo } from '../../assets/index'
 
 const FooterMiddle = () => {
     return (
-        <div className='w-full bg-amazon_light text-white px-14 py-10'>
+        <div className='w-full bg-amazon_light text-white px-14'>
             <div className='flex w-full border-b-[1px] border-gray-500 py-12 justify-around font-Roboto text-gray-300'>
                 {
                     middleList.map((item) => (

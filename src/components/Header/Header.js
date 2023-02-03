@@ -36,7 +36,7 @@ const Header = () => {
     }, []);
 
     return (
-        <div>
+        <div className='w-full sticky top-0 z-50'>
             <div className='w-full bg-amazon_blue text-white flex items-center p-1 px-2'>
 
                 {/* Left side */}

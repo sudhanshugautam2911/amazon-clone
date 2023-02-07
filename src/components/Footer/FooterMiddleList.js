@@ -4,7 +4,7 @@ const FooterMiddleList = ({ title, listItem }) => {
     return (
         <div className=''>
             <ul className='space-y-2'>
-                <li className='footerLink font-bold pb-3 text-white'>{title}</li>
+                <li className='footerLink cursor-text hover:no-underline font-bold pb-3 text-white'>{title}</li>
                 {
             //  <--- This method not working properly --->
                     // listItem.map((item) => (
@@ -12,7 +12,7 @@ const FooterMiddleList = ({ title, listItem }) => {
                     // ))
 
                     listItem.map((item) => item.listData.map((data, index) => (
-                        <li key={index} className="footerLink flex">{data}</li>
+                        <li key={index} className="footerLink flex text-gray-300">{data}</li>
                         // here index does not represent the key from index.js(001,002,003) instead its default index (0,1,2,3)
                     )))
                 }

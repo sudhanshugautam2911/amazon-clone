@@ -34,11 +34,11 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="w-full sticky top-0 z-50">
-      <div className="w-full bg-amazon_blue text-white flex items-center p-1 px-2">
+    <div className="w-full sticky top-0 z-50 ">
+      <div className="w-full bg-amazon_blue text-white flex items-center p-1 px-2 justify-between">
         {/* Left side */}
         <div className="headerHover">
-          <img className="w-24 mt-2" src={logo} alt="Amazon" />
+          <img className="w-24" src={logo} alt="Amazon" />
         </div>
 
         <div className="headerHover hidden mdl:inline-flex">
@@ -50,10 +50,10 @@ const Header = () => {
         </div>
 
         {/* mid search part */}
-        <div className="h-10 rounded-md flex flex-grow relative mx-2 hidden mdl:inline-flex">
+        <div className="h-10 rounded-md flex flex-grow relative mx-2 hidden lgl:inline-flex">
           <span
             onClick={() => setShowAll(!showAll)}
-            className="w-auto h-full text-xs flex items-center justify-center text-[#6a6155] hover:text-amazon_blue bg-gray-200 hover:bg-gray-300  cursor-pointer rounded-tl-md rounded-bl-md px-2"
+            className="w-auto h-full text-xs flex items-center justify-center text-[#6a6155] hover:text-amazon_blue bg-gray-200 hover:bg-gray-300  cursor-pointer rounded-tl-md rounded-bl-md px-2 "
           >
             {search}
             <span></span>
@@ -85,8 +85,8 @@ const Header = () => {
 
         {/* right side */}
         <div className="flex flex-col items-start justify-center headerHover">
-          <p className="text-sm mdl:text-xs text-white mdl:text-lightText font-light">Hello, sign in</p>
-          <p className="text-sm font-semibold -mt-1 text-whiteText hidden mdl:inline-flex">
+          <p className="text-sm md:text-xs text-white md:text-lightText font-light">Hello, sign in</p>
+          <p className="text-sm font-semibold -mt-1 text-whiteText hidden md:inline-flex">
             Accounts & Lists{" "}
             <span>
               <ArrowDropDownOutlinedIcon />

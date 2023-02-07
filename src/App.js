@@ -6,7 +6,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-// import { productsData } from "./api/api";
+import { productsData } from "./api/api";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 // import Banner from "./components/Home/Banner";
@@ -26,12 +26,12 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} ></Route>
+        <Route index element={<Home />} loader={productsData}></Route>
       </Route>
     )
   );
   return (
-    <div className="font-bodyFont">
+    <div className="font-bodyFont bg-gray-100">
       <RouterProvider router={router}></RouterProvider>
     </div>
   );

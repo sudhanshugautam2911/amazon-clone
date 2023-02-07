@@ -14,7 +14,7 @@ const Product = () => {
     console.log(productData);
 
     return (
-        <div className="allProduct max-w-screen-2xl mx-auto grid grid-cols-4 gap-10 px-4">
+        <div className="allProduct max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 px-4">
             {productData.map((item) => (
                 <div
                     key={item.id}
@@ -46,11 +46,13 @@ const Product = () => {
                             <h2 className="font-titleFont tracking-wide text-lg text-amazon_blue font-medium">
                                 {item.title.substring(0, 20)}
                             </h2>
-                            <p className="text-sm text-gray-600 font-semibold">
+                            {/* Price in dollar */}
+                            {/* <p className="text-sm text-gray-600 font-semibold">
                                 ${item.price}
-                            </p>
+                            </p> */}
+
                             {/* Price in INR */}
-                            {/* <RoundedPrice price={item.price} /> */}
+                            <RoundedPrice price={item.price} />
                         </div>
                         <div>
                             <p className="text-sm">

@@ -5,8 +5,10 @@ import Products from '../components/Home/Product'
 const Home = () => {
   return (
     <div>
-        <Banner />
+      <Banner />
+      <div className='w-full -mt-36'>
         <Products />
+      </div>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/SearchOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { items } from "../../constants";
 import HeaderBottom from "./HeaderBottom";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [showAll, setShowAll] = useState(false);
@@ -76,6 +77,7 @@ const Header = () => {
           )}
           <input
             type="text"
+            placeholder="Website by sudhanshu gautam"
             className="h-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
           />
           <span className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
@@ -84,15 +86,20 @@ const Header = () => {
         </div>
 
         {/* right side */}
-        <div className="flex flex-col items-start justify-center headerHover">
-          <p className="text-sm md:text-xs text-white md:text-lightText font-light">Hello, sign in</p>
-          <p className="text-sm font-semibold -mt-1 text-whiteText hidden md:inline-flex">
-            Accounts & Lists{" "}
-            <span>
-              <ArrowDropDownOutlinedIcon />
-            </span>
-          </p>
-        </div>
+
+        {/* Signin start here */}
+        <Link to="/signin">
+          <div className="flex flex-col items-start justify-center headerHover">
+            <p className="text-sm md:text-xs text-white md:text-lightText font-light">Hello, sign in</p>
+            <p className="text-sm font-semibold -mt-1 text-whiteText hidden md:inline-flex">
+              Accounts & Lists{" "}
+              <span>
+                <ArrowDropDownOutlinedIcon />
+              </span>
+            </p>
+          </div>
+        </Link>
+
         <div className="flex flex-col items-start justify-center headerHover hidden lgl:inline-flex">
           <p className="text-xs font-light text-lightText">Returns</p>
           <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>

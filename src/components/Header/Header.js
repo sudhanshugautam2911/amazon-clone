@@ -7,10 +7,13 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { items } from "../../constants";
 import HeaderBottom from "./HeaderBottom";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [showAll, setShowAll] = useState(false);
   const [search, setSearch] = useState("All");
+
+  const products = useSelector((state) => state.amazonReducer.products);
 
   //I was trying use ref method to hide list item but not working
   // const ref = useRef();
@@ -38,9 +41,11 @@ const Header = () => {
     <div className="w-full sticky top-0 z-50 ">
       <div className="w-full bg-amazon_blue text-white flex items-center p-1 px-2 justify-between">
         {/* Left side */}
-        <div className="headerHover">
-          <img className="w-24" src={logo} alt="Amazon" />
-        </div>
+        <Link to='/'>
+          <div className="headerHover">
+            <img className="w-24" src={logo} alt="Amazon" />
+          </div>
+        </Link>
 
         <div className="headerHover hidden mdl:inline-flex">
           <LocationIcon />
@@ -104,15 +109,19 @@ const Header = () => {
           <p className="text-xs font-light text-lightText">Returns</p>
           <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
         </div>
-        <div className="flex items-start items-center justify-center headerHover relative">
-          <ShoppingCartIcon />
-          <p className="text-sm font-semibold b-6 text-whiteText mt-3 ">
-            Cart{" "}
-            <span className=" absolute text-xs left-7 top-1 font-semibold bg-amazon_yellow rounded-full p-1 h-4 flex items-center justify-center text-amazon_blue">
-              0
-            </span>
-          </p>
-        </div>
+        <Link to='/cart'>
+          {/* ========== Cart Start here ============ */}
+          <div className="flex items-center justify-center headerHover relative">
+            <ShoppingCartIcon />
+            <p className="text-sm font-semibold b-6 text-whiteText mt-3 ">
+              Cart{" "}
+              <span className=" absolute text-xs left-7 top-1 font-semibold bg-amazon_yellow rounded-full p-1 h-4 flex items-center justify-center text-amazon_blue">
+                {products.length > 0 ? products.length : 0}
+              </span>
+            </p>
+          </div>
+        </Link>
+        {/* ========== Cart End here ============ */}
       </div>
       <HeaderBottom />
     </div>

@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { deleteItem } from "../redux/amazonSlice"
+import { resetCart } from "../redux/amazonSlice"
+import { incrementQuantity , decrementQuantity } from "../redux/amazonSlice";
+
+
+// important things
+// toFixed() is best to limit a value
+// using redux-persist so that items in cart dont go after refresh
+
 
 const Cart = () => {
+
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.amazonReducer.products)
   console.log(products)
   const [totalPrice, setTotalPrice] = useState("0");
@@ -14,6 +25,7 @@ const Cart = () => {
       return setTotalPrice(Total.toFixed(2));
     })
   })
+
 
   return (
     <div className='w-full bg-gray-100 p-4'>
@@ -41,20 +53,20 @@ const Cart = () => {
                       </p>
                       <div className='bg-[#F0F2F2] flex gap-2 my-1 justify-center items-center w-36 py-1 text-center drop-shadow-lg rounded-md '>
                         <p>Qty:</p>
-                        <p className='cursor-pointer font-semibold bg-gray-200 px-2 rounded-sm hover:bg-gray-400 duration-300'>-</p>
+                        <p onClick={()=> dispatch(decrementQuantity(item.id))} className='cursor-pointer font-semibold bg-gray-200 px-2 rounded-sm hover:bg-gray-400 duration-300'>-</p>
                         <p className='font-semibold px-1'>{item.quantity}</p>
-                        <p onClick={() => { }} className='cursor-pointer font-semibold bg-gray-200 px-2 rounded-sm hover:bg-gray-400 duration-300'>+</p>
+                        <p onClick={()=> dispatch(incrementQuantity(item.id))} className='cursor-pointer font-semibold bg-gray-200 px-2 rounded-sm hover:bg-gray-400 duration-300'>+</p>
                       </div>
-                      <button className='rounded-lg w-36 py-1 mt-3  bg-red-500 text-white hover:bg-red-700 active:bg-red-900 duration-300'>Delete Item</button>
+                      <button onClick={() => dispatch(deleteItem(item.id))} className='rounded-lg w-36 py-1 mt-3  bg-red-500 text-white hover:bg-red-700 active:bg-red-900 duration-300'>Delete Item</button>
                     </div>
                     <div className=''>
-                      <p className='font-semibold font-titleFont text-lg'>${item.price * item.quantity}</p>
+                      <p className='font-semibold font-titleFont text-lg'>${(item.price * item.quantity).toFixed(2)}</p>
                     </div>
                   </div>
                 </div>
               ))}
             <div>
-              <button className='rounded-lg w-36 py-3 m-3 font-titleFont font-bold bg-red-500 text-white hover:bg-red-700 active:bg-red-900 duration-300'>Clear Cart</button>
+              <button onClick={()=> dispatch(resetCart())} className='rounded-lg w-36 py-3 m-3 font-titleFont font-bold bg-red-500 text-white hover:bg-red-700 active:bg-red-900 duration-300'>Clear Cart</button>
             </div>
           </div>
         </div>

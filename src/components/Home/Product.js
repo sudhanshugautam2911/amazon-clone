@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 const Product = () => {
     const data = useLoaderData();
     const productData = data.data;
-    console.log(productData);
+    // console.log(productData);
     const dispatch = useDispatch();
     
     return (

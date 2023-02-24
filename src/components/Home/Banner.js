@@ -21,7 +21,6 @@ const Banner = () => {
         slidesToScroll: 1,
         autoplay: true,
         swipeToSlide: true,
-        
 
     };
 

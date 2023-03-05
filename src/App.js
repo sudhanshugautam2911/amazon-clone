@@ -14,6 +14,7 @@ import Header from "./components/Header/Header";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import Cart from "./pages/Cart";
+import Registration from "./pages/Registration";
 
 
 const Layout = () => {
@@ -30,10 +31,13 @@ const Layout = () => {
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} loader={productsData}></Route>
-        <Route path="/signin" element={<SignIn/>}> </Route>
-        <Route path="/cart" element={<Cart/>}></Route>
+      <Route>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} loader={productsData}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+        </Route>
+          <Route path="/signin" element={<SignIn />}> </Route>
+          <Route path="/registration" element={<Registration />}> </Route>
       </Route>
     )
   );

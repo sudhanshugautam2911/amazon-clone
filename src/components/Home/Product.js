@@ -50,12 +50,12 @@ const Product = () => {
                                 {item.title.substring(0, 20)}
                             </h2>
                             {/* Price in dollar */}
-                            {/* <p className="text-sm text-gray-600 font-semibold">
+                            <p className="text-sm text-gray-600 font-semibold">
                                 ${item.price}
-                            </p> */}
+                            </p>
 
                             {/* Price in INR */}
-                            <RoundedPrice price={item.price} />
+                            {/* <RoundedPrice price={item.price} /> */}
                         </div>
                         <div>
                             <p className="text-sm">

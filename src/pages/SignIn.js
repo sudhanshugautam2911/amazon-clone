@@ -22,7 +22,7 @@ const SignIn = () => {
   }
   
 
-  const handleRegistration = (e) => {
+  const handleSigin = (e) => {
     e.preventDefault();
     if(!email) {
       setErrEmail("Enter your email")
@@ -80,7 +80,7 @@ const SignIn = () => {
 
               {/* SUBMIT BUTTON START HERE */}
               <button
-                onClick={handleRegistration}
+                onClick={handleSigin}
                 className="w-full py-1.5 text-sm font-normal rounded-sm bg-gradient-to-t from-[#f7dfa5] to-[#f0c14b] hover:bg-gradient-to-b border border-zinc-400 active:border-yellow-800 active:shadow-amazonInput"
               >
                 Continue

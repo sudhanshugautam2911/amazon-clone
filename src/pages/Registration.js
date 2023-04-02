@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { darklogo } from "../assets";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { Link } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const Registration = () => {
-
+  const auth = getAuth();
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,43 +13,80 @@ const Registration = () => {
 
   // Err Start here
 
-  const [errClientName, setErrClientName] = useState("")
-  const [errEmail, setErrEmail] = useState("")
-  const [errPassword, setErrPassword] = useState("")
-  const [errCPassword, setErrCPassword] = useState("")
-    
+  const [errClientName, setErrClientName] = useState("");
+  const [errEmail, setErrEmail] = useState("");
+  const [errPassword, setErrPassword] = useState("");
+  const [errCPassword, setErrCPassword] = useState("");
+
   // handle start here
   const handleName = (e) => {
-    setClientName(e.target.value)
-    setErrClientName("")
-  }
+    setClientName(e.target.value);
+    setErrClientName("");
+  };
   const handleEmail = (e) => {
-    setEmail(e.target.value)
-    setErrEmail("")
-  }
+    setEmail(e.target.value);
+    setErrEmail("");
+  };
   const handlePassword = (e) => {
     setPassword(e.target.value)
     setErrPassword("")
   }
   const handleCPassword = (e) => {
-    setCPassword(e.target.value)
-    setErrCPassword("")
-  }
-  const handleRegistration=(e)=> {
-    e.preventDefault()
-    if(!clientName) {
-      setErrClientName("Enter your name")
+    setCPassword(e.target.value);
+    setErrCPassword("");
+  };
+
+  // Email validation start
+  // regex email validation javascript
+  const emailValidation = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+  };
+
+  const handleRegistration = (e) => {
+    e.preventDefault();
+    if (!clientName) {
+      setErrClientName("Enter your name");
     }
-    if(!email) {
-      setErrEmail("Enter your email")
+    if (!email) {
+      setErrEmail("Enter your email");
+    } else {
+      if (!emailValidation(email)) {
+        setErrEmail("Enter a valid email");
+      }
     }
-    if(!password) {
-      setErrPassword("Enter your password")
+    if (!password) {
+      setErrPassword("Enter your password");
+    } else {
+      if (password.length < 6) {
+        setErrPassword("Passwords must be at least 6 characters.");
+      }
     }
-    if(!cPassword) {
-      setErrCPassword("Confirm your password")
+    if (!cPassword) {
+      setErrCPassword("Confirm your password");
+    } else {
+      if (cPassword !== password) {
+        setErrCPassword("Password not matched");
+      }
     }
-  }
+
+    if (
+      clientName &&
+      email &&
+      emailValidation &&
+      password &&
+      password.length >= 6 &&
+      cPassword &&
+      cPassword === password
+    ) {
+      setClientName("");
+      setEmail("");
+      setPassword("");
+      setCPassword("");
+      setErrCPassword("");
+    }
+  };
 
   return (
     <div className="w-full">
@@ -65,30 +103,32 @@ const Registration = () => {
                 <input
                   onChange={handleName}
                   type="name"
-                  className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
+                  className="w-full py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                 />
-                {
-                  errClientName && (
-                    <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
-                      <span className="italic font-titleFont font-extrabold text-base">!</span> {errClientName}
-                    </p>
-                  )
-                }
+                {errClientName && (
+                  <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
+                    <span className="italic font-titleFont font-extrabold text-base">
+                      !
+                    </span>{" "}
+                    {errClientName}
+                  </p>
+                )}
               </div>
               <div className="flex flex-col gap-2">
                 <h1 className="text-sm font-medium">Email or phone number</h1>
                 <input
                   onChange={handleEmail}
                   type="email"
-                  className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
+                  className="w-full py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                 />
-                {
-                  errEmail && (
-                    <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
-                      <span className="italic font-titleFont font-extrabold text-base">!</span> {errEmail}
-                    </p>
-                  )
-                }
+                {errEmail && (
+                  <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
+                    <span className="italic font-titleFont font-extrabold text-base">
+                      !
+                    </span>{" "}
+                    {errEmail}
+                  </p>
+                )}
               </div>
               <div className="flex flex-col gap-2">
                 <h1 className="text-sm font-medium">Password</h1>
@@ -97,13 +137,14 @@ const Registration = () => {
                   type="password"
                   className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                 />
-                {
-                  errPassword && (
-                    <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
-                      <span className="italic font-titleFont font-extrabold text-base">!</span> {errPassword}
-                    </p>
-                  )
-                }
+                {errPassword && (
+                  <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
+                    <span className="italic font-titleFont font-extrabold text-base">
+                      !
+                    </span>{" "}
+                    {errPassword}
+                  </p>
+                )}
               </div>
               <div className="flex flex-col gap-2">
                 <h1 className="text-sm font-medium">Re-enter Password</h1>
@@ -112,13 +153,14 @@ const Registration = () => {
                   type="password"
                   className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                 />
-                {
-                  errCPassword && (
-                    <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
-                      <span className="italic font-titleFont font-extrabold text-base">!</span> {errCPassword}
-                    </p>
-                  )
-                }
+                {errCPassword && (
+                  <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
+                    <span className="italic font-titleFont font-extrabold text-base">
+                      !
+                    </span>{" "}
+                    {errCPassword}
+                  </p>
+                )}
               </div>
               <div>
                 <p className="text-xs text-gray-600">

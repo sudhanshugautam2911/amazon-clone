@@ -1,36 +1,88 @@
 import React, { useState } from "react";
 import { darklogo } from "../assets";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { motion } from "framer-motion";
+import { RotatingLines } from "react-loader-spinner";
 
 const SignIn = () => {
+  // firebase signIn
+  const auth = getAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loader, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
 
-  // Err Start here
-  
-  const [errEmail, setErrEmail] = useState("")
-  const [errPassword, setErrPassword] = useState("")
+  // Error Start here
+  const [errEmail, setErrEmail] = useState("");
+  const [errPassword, setErrPassword] = useState("");
 
   const handleEmail = (e) => {
-    setEmail(e.target.value)
-    setErrEmail("")
-  }
+    setEmail(e.target.value);
+    setErrEmail("");
+  };
   const handlePassword = (e) => {
-    setPassword(e.target.value)
-    setErrPassword("")
-  }
-  
+    setPassword(e.target.value);
+    setErrPassword("");
+  };
+  // Email validation start
+  // regex email validation javascript
+  const emailValidation = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+  };
 
+  // onclick login
   const handleSigin = (e) => {
     e.preventDefault();
-    if(!email) {
-      setErrEmail("Enter your email")
+    if (!email) {
+      setErrEmail("Enter your email");
+    }else {
+      if (!emailValidation(email)) {
+        setErrEmail("Enter a valid email")
+      }
     }
-    if(!password) {
-      setErrPassword("Enter your password")
+    if (!password) {
+      setErrPassword("Enter your password");
     }
-  }
+
+    if (email && password) {
+      setLoading(true);
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          // ...
+          setLoading(false);
+          setSuccessMsg("Logged in Successfully! Welcome back!");
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        })
+        .catch((error) => {
+          setLoading(false);
+          const errorCode = error.code;
+          // const errorMessage = error.message;
+          if (errorCode.includes("auth/wrong-password")) {
+            setErrPassword("Wrong Password! Try Again");
+            setPassword("");
+            console.log("wrong password")
+          }
+          if (errorCode.includes("auth/user-not-found")) {
+            setErrEmail("No user Found with this Email");
+            setEmail("");
+            setPassword("");
+            console.log("wrong email")
+
+          }
+        });
+        // setEmail("")
+        // setPassword("")
+    }
+  };
 
   return (
     <div className="w-full">
@@ -47,16 +99,18 @@ const SignIn = () => {
                 </p>
                 <input
                   onChange={handleEmail}
+                  value={email}
                   type="email"
                   className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                 ></input>
-                {
-                  errEmail && (
-                    <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
-                      <span className="italic font-titleFont font-extrabold text-base">!</span> {errEmail}
-                    </p>
-                  )
-                }
+                {errEmail && (
+                  <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
+                    <span className="italic font-titleFont font-extrabold text-base">
+                      !
+                    </span>{" "}
+                    {errEmail}
+                  </p>
+                )}
               </div>
               {/* EMAIL END HERE */}
 
@@ -65,16 +119,18 @@ const SignIn = () => {
                 <p className="text-sm font-medium">Password</p>
                 <input
                   onChange={handlePassword}
+                  value={password}
                   type="password"
                   className="w-full lowercase py-1 border border-zinc-400 px-2 text-base rounded-sm outline-none focus-within:border-[#e77600] focus-within:shadow-amazonInput duration-100"
                 ></input>
-                {
-                  errPassword && (
-                    <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
-                      <span className="italic font-titleFont font-extrabold text-base">!</span> {errPassword}
-                    </p>
-                  )
-                }
+                {errPassword && (
+                  <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
+                    <span className="italic font-titleFont font-extrabold text-base">
+                      !
+                    </span>{" "}
+                    {errPassword}
+                  </p>
+                )}
               </div>
               {/* PASSWORD END HERE */}
 
@@ -86,6 +142,29 @@ const SignIn = () => {
                 Continue
               </button>
               {/* SUBMIT BUTTON END HERE */}
+              {loader && (
+                <div className="flex justify-center">
+                  <RotatingLines
+                    strokeColor="#febd69"
+                    strokeWidth="5"
+                    animationDuration="0.75"
+                    width="50"
+                    visible={true}
+                  />
+                </div>
+              )}
+              {successMsg && (
+                <div>
+                  <motion.p
+                    initial={{ y: 10, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-base font-titleFont font-semibold text-green-500 border-[1px] border-green-500 px-2 text-center"
+                  >
+                    {successMsg}
+                  </motion.p>
+                </div>
+              )}
             </div>
 
             <p className="text-xs text-black leading-4">
